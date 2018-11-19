@@ -19,7 +19,7 @@ void proccesingLine(char *line)
 			line++;
 	if(!flagEndLine && cntDeleteChar)
 	{
-		fgets(extra,cntDeleteChar,fin);
+		fgets(extra,cntDeleteChar+1,fin);
 		strCopy(line,extra);
 		proccesingLine(extra);
 	}

@@ -1,5 +1,6 @@
 #include <stdio.h>
-#include "define.h"
+#include "format.h"
+#include "def.h"
 
 void strCopyN(char *s1,char *s2, int num);
 
@@ -7,6 +8,32 @@ extern int formatFlag;
 extern int numEnd;
 extern int numBegin;
 extern int cntCharacter;
+
+void format(char *finalyLine, char *line)
+{
+	switch(formatFlag)
+	{
+	case 0:
+		strCopyN(finalyLine,line,numEnd-numBegin);
+		break;
+
+	case 1:
+		formatLeft(finalyLine, line);
+		break;
+
+	case 2:
+		formatRight(finalyLine, line);
+		break;
+
+	case 3:
+		formatCenter(finalyLine, line);
+		break;
+
+	case 4:
+		formatLeftAndRight(finalyLine, line);
+		break;
+	}
+}
 
 void formatLeft(char *finalyLine, char *line)
 {

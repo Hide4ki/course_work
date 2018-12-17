@@ -1,6 +1,7 @@
 #include <stdio.h>
-#include "define.h"
+#include <stdlib.h>
 #include "format.h"
+#include "def.h"
 
 extern int formatFlag;
 extern int numEnd;
@@ -14,30 +15,14 @@ char *bildFinalyLine(char *line)
 	static char finalyLine[WIDTH+1];
 
 	numBegin--;
-	sprintf(finalyLine,"%*s",numBegin,"");
-
-	switch(formatFlag)
+	if(numEnd-numBegin > WIDTH)
 	{
-	case 0:
-		strCopyN(finalyLine+numBegin,line,numEnd-numBegin);
-		break;
-
-	case 1:
-		formatLeft(finalyLine + numBegin, line);
-		break;
-
-	case 2:
-		formatRight(finalyLine + numBegin, line);
-		break;
-
-	case 3:
-		formatCenter(finalyLine + numBegin, line);
-		break;
-
-	case 4:
-		formatLeftAndRight(finalyLine + numBegin, line);
-		break;
+		printf("Error, format place very far");
+		exit(2);
 	}
+	fprintf(stdout,"%*s",numBegin,"");
+	sprintf(finalyLine,"%*s",sizeof(finalyLine)-1,"");
+	format(finalyLine, line);
 
 	finalyLine[numEnd] ='\0';
 

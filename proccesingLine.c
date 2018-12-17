@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "define.h"
+#include "def.h"
 
 char *searchNextCommand(char *line);
 int getAndSetCommand(char *cmd);
@@ -11,16 +11,24 @@ extern FILE *fin;
 
 void proccesingLine(char *line)
 {
-	char extra[WIDTH];
+	char extra[WIDTH+1];
+	char *tmp;
+	char *b;
+	char buffer[WIDTH+WIDTH];
+	strCopy(buffer,line);
+	tmp = buffer;
+	b = buffer;
 	cntDeleteChar = 0;
 	flagEndLine = 0;
-	while(*(line = searchNextCommand(line)))
-		if(!getAndSetCommand(line))
-			line++;
-	if(!flagEndLine && cntDeleteChar)
+	while(*(b = searchNextCommand(b)))
+		if(!getAndSetCommand(b))
+			b++;
+	if(line && !flagEndLine && cntDeleteChar)
 	{
-		fgets(extra,cntDeleteChar+1,fin);
-		strCopy(line,extra);
-		proccesingLine(extra);
+		extra[0] = 0;
+		fgets(extra,cntDeleteChar+3,fin);
+		strCopy(b,extra);
+		proccesingLine(tmp);
 	}
+	strCopy(line,buffer);
 }
